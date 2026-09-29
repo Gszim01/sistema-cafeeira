@@ -1,0 +1,6 @@
+/target/
+/data/
+*.mv.db
+*.lock.db
+.vscode/
+.github/modernize/

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout-fragments :: head('Nota ' + nota.numero + ' - Cafeeira 2 Irmãos')">
+</head>
+<body>
+<header th:replace="layout-fragments :: cabecalho"></header>
+
+<main class="container">
+
+    <p th:if="${mensagem}" class="mensagem-sucesso" th:text="${mensagem}">Nota salva!</p>
+
+    <div class="ficha-moldura">
+
+        <div class="ficha-cabecalho">
+            <div class="ficha-empresa">
+                <h2>CAFEEIRA 2 IRMÃOS</h2>
+                <p>CNPJ 38.079.416/0001-10 · (69) 99290-7581</p>
+                <p>LH 102 Km Lado Sul - São Miguel do Guaporé - RO</p>
+            </div>
+            <div class="ficha-numero">
+                <span>N 0</span>
+                <strong th:text="${nota.numero}">00001</strong>
+            </div>
+        </div>
+
+        <h1 class="ficha-titulo">NOTA DE CONTROLE DE SECAGEM E BENEFICIAMENTO</h1>
+
+        <div class="ficha-campos">
+            <div class="ficha-linha">
+                <span class="rotulo">Nome:</span>
+                <span th:text="${nota.nome}">Nome</span>
+                <span class="rotulo">Telefone:</span>
+                <span th:text="${nota.telefone} ?: '—'">—</span>
+            </div>
+            <div class="ficha-linha">
+                <span class="rotulo">Linha:</span>
+                <span th:text="${nota.linha} ?: '—'">—</span>
+            </div>
+            <div class="ficha-linha">
+                <span class="rotulo">Obs:</span>
+                <span th:text="${nota.observacoes} ?: '—'">—</span>
+            </div>
+        </div>
+
+        <div class="ficha-medidas">
+            <div class="medida">
+                <span class="medida-cabeca">SACAS</span>
+                <span class="medida-valor" th:text="${nota.sacas}">0</span>
+            </div>
+            <div class="medida">
+                <span class="medida-cabeca">QUILOS</span>
+                <span class="medida-valor" th:text="${nota.quilos}">0</span>
+            </div>
+            <div class="medida">
+                <span class="medida-cabeca">UMIDADE</span>
+                <span class="medida-valor" th:text="${nota.umidade}">0</span>
+            </div>
+            <div class="medida">
+                <span class="medida-cabeca">DATA</span>
+                <span class="medida-valor"
+                      th:text="${nota.data != null ? #temporals.format(nota.data, 'dd/MM/yyyy') : '—'}">
+                    01/01/2026
+                </span>
+            </div>
+        </div>
+
+        <div class="ficha-assinatura">
+            <span>Ass. do Maquinista:</span>
+            <span th:text="${nota.assinatura} ?: '—'">—</span>
+        </div>
+
+    </div>
+
+    <div class="acoes">
+        <a th:href="@{/notas/{id}/pdf(id=${nota.id})}" target="_blank"
+           class="botao botao-principal">📄 Gerar PDF</a>
+        <a th:href="@{/notas/{id}/editar(id=${nota.id})}" class="botao botao-secundario">✏️ Editar</a>
+        <a th:href="@{/notas}" class="botao botao-secundario">← Voltar para a lista</a>
+    </div>
+
+</main>
+</body>
+</html>

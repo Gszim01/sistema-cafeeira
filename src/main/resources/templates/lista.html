@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout-fragments :: head('Notas - Cafeeira 2 Irmãos')">
+</head>
+<body>
+<header th:replace="layout-fragments :: cabecalho"></header>
+
+<main class="container">
+
+    <h1>Notas emitidas</h1>
+
+    <form th:action="@{/notas}" method="get" class="pesquisa">
+        <input type="text" name="numero" placeholder="Número (ex.: 00001)"
+               th:value="${filtroNumero}">
+        <input type="text" name="nome" placeholder="Nome do cliente"
+               th:value="${filtroNome}">
+        <input type="date" name="data" th:value="${filtroData}">
+        <button type="submit" class="botao botao-principal">🔍 Pesquisar</button>
+        <a th:href="@{/notas}" class="botao botao-secundario">Limpar</a>
+        <a th:href="@{/notas/nova}" class="botao botao-secundario">+ Nova</a>
+    </form>
+
+    <p th:if="${#lists.isEmpty(notas)}" class="vazio">
+        Nenhuma nota encontrada. Ajuste a pesquisa ou emita uma nova nota.
+    </p>
+
+    <table th:if="${not #lists.isEmpty(notas)}" class="tabela">
+        <thead>
+            <tr>
+                <th>Nº</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Sacas</th>
+                <th>Quilos</th>
+                <th>Umidade</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="nota : ${notas}">
+                <td th:text="${nota.numero}">00001</td>
+                <td th:text="${nota.nome}">Nome</td>
+                <td th:text="${nota.telefone}">Telefone</td>
+                <td th:text="${nota.sacas}">0</td>
+                <td th:text="${nota.quilos}">0</td>
+                <td th:text="${nota.umidade}">0</td>
+                <td th:text="${nota.data != null ? #temporals.format(nota.data, 'dd/MM/yyyy') : '-'}">
+                    01/01/2026
+                </td>
+                <td class="acoes-linha">
+                    <a th:href="@{/notas/{id}(id=${nota.id})}" class="acao">👁 Ver</a>
+                    <a th:href="@{/notas/{id}/editar(id=${nota.id})}" class="acao">✏️ Editar</a>
+                    <a th:href="@{/notas/{id}/pdf(id=${nota.id})}" class="acao" target="_blank">📄 PDF</a>
+                    <form th:action="@{/notas/{id}/excluir(id=${nota.id})}" method="post"
+                          class="form-excluir"
+                          onsubmit="return confirm('Excluir a nota ' + this.closest('tr').querySelector('td').textContent + '?');">
+                        <button type="submit" class="acao acao-perigo">🗑 Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</main>
+</body>
+</html>

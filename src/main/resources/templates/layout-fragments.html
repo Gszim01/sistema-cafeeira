@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}">Cafeeira 2 Irmãos</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+<body>
+<header th:fragment="cabecalho" class="topo">
+    <div class="topo-conteudo">
+        <a th:href="@{/}" class="marca">CAFEEIRA 2 IRMÃOS</a>
+        <nav class="menu">
+            <a th:href="@{/}" class="menu-link">Início</a>
+            <a th:href="@{/notas/nova}" class="menu-link menu-destaque">+ Nova Nota</a>
+            <a th:href="@{/notas}" class="menu-link">Notas</a>
+        </nav>
+    </div>
+</header>
+</body>
+</html>
