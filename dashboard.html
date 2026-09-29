@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout-fragments :: head('Início - Cafeeira 2 Irmãos')">
+</head>
+<body>
+<header th:replace="layout-fragments :: cabecalho"></header>
+
+<main class="container">
+
+    <section class="painel-boas-vindas">
+        <h1>CAFEEIRA 2 IRMÃOS</h1>
+        <p class="subtitulo">Sistema de Notas de Controle de Secagem e Beneficiamento</p>
+        <p class="local">São Miguel do Guaporé - RO</p>
+    </section>
+
+    <section class="cartoes-resumo">
+        <div class="cartao">
+            <span class="cartao-valor" th:text="${totalNotas}">0</span>
+            <span class="cartao-rotulo">Notas emitidas</span>
+        </div>
+        <div class="cartao">
+            <span class="cartao-valor" th:text="${totalSacas}">0</span>
+            <span class="cartao-rotulo">Total de sacas</span>
+        </div>
+    </section>
+
+    <section class="acoes">
+        <a th:href="@{/notas/nova}" class="botao botao-principal">➕ Emitir nova nota</a>
+        <a th:href="@{/notas}" class="botao botao-secundario">📋 Ver todas as notas</a>
+    </section>
+
+    <section class="ultimas">
+        <h2>Últimas notas emitidas</h2>
+
+        <p th:if="${#lists.isEmpty(ultimasNotas)}" class="vazio">
+            Nenhuma nota emitida ainda. Clique em <strong>Emitir nova nota</strong> para começar.
+        </p>
+
+        <table th:if="${not #lists.isEmpty(ultimasNotas)}" class="tabela">
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Nome</th>
+                    <th>Sacas</th>
+                    <th>Quilos</th>
+                    <th>Umidade</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="nota : ${ultimasNotas}">
+                    <td th:text="${nota.numero}">00001</td>
+                    <td th:text="${nota.nome}">Nome</td>
+                    <td th:text="${nota.sacas}">0</td>
+                    <td th:text="${nota.quilos}">0</td>
+                    <td th:text="${nota.umidade}">0</td>
+                    <td th:text="${#temporals.format(nota.data, 'dd/MM/yyyy')}">01/01/2026</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+<footer class="rodape">
+    <span>CAFEEIRA 2 IRMÃOS · Controle de Secagem e Beneficiamento</span>
+</footer>
+</body>
+</html>
